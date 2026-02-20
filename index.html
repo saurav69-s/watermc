@@ -5,6 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Water MC | Minecraft Server</title>
     <style>
+        /* --- Global Resets --- */
+        * {
+            box-sizing: border-box;
+        }
+
         body {
             margin: 0;
             padding: 0;
@@ -12,128 +17,103 @@
             background: linear-gradient(to bottom, #0f2027, #203a43, #2c5364);
             color: white;
             min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
-        /* --- Corner Logo Styles --- */
-        .corner-logo {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            width: 70px;
-            height: 70px;
-            border-radius: 50%;
-            border: 3px solid #00d2ff;
-            object-fit: cover;
-            animation: logoPulse 3s infinite ease-in-out;
-            box-shadow: 0 0 15px rgba(0, 210, 255, 0.6);
-            z-index: 100; /* Ensures it stays on top */
-        }
-
-        /* --- MOBILE RESPONSIVE FIX --- */
-        @media (max-width: 600px) {
-            .corner-logo {
-                width: 50px;       /* Smaller on mobile */
-                height: 50px;
-                top: 10px;
-                left: 10px;
-                border: 2px solid #00d2ff;
-            }
-            
-            h1 {
-                font-size: 40px; /* Smaller title on mobile */
-                margin-top: 70px; /* Extra space so logo doesn't overlap */
-            }
-            
-            .ip-box {
-                padding: 15px;
-                margin-top: 10px;
-            }
-            
-            .ip-text {
-                font-size: 18px;
-            }
-            
-            .btn {
-                padding: 12px 25px;
-                font-size: 16px;
-                display: block; /* Stack buttons on mobile */
-                width: 80%;
-                margin: 10px auto;
-            }
-        }
-
-        @keyframes logoPulse {
-            0% {
-                transform: scale(1);
-                box-shadow: 0 0 15px rgba(0, 210, 255, 0.6);
-            }
-            50% {
-                transform: scale(1.1);
-                box-shadow: 0 0 30px rgba(0, 210, 255, 1), 0 0 10px white;
-            }
-            100% {
-                transform: scale(1);
-                box-shadow: 0 0 15px rgba(0, 210, 255, 0.6);
-            }
-        }
-
+        /* --- Container - Auto Adjusts Width --- */
         .container {
-            max-width: 800px;
+            width: 90%; /* Uses 90% of the screen width */
+            max-width: 800px; /* But never gets bigger than 800px */
             margin: 0 auto;
             padding: 20px;
             text-align: center;
         }
 
-        h1 {
-            font-size: 60px;
-            margin-top: 30px;
-            color: #00d2ff;
-            text-shadow: 0 0 20px #00d2ff;
+        /* --- Corner Logo --- */
+        .corner-logo {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 8%; /* Responsive width based on screen */
+            min-width: 50px; /* Never gets smaller than 50px */
+            max-width: 80px; /* Never gets bigger than 80px */
+            aspect-ratio: 1 / 1; /* Keeps it a perfect circle */
+            border-radius: 50%;
+            border: 3px solid #00d2ff;
+            object-fit: cover;
+            animation: logoPulse 3s infinite ease-in-out;
+            box-shadow: 0 0 15px rgba(0, 210, 255, 0.6);
+            z-index: 100;
         }
 
+        /* --- Title --- */
+        h1 {
+            font-size: clamp(40px, 8vw, 60px); /* Smart font sizing */
+            margin-top: 50px;
+            color: #00d2ff;
+            text-shadow: 0 0 20px #00d2ff;
+            margin-bottom: 10px;
+        }
+
+        /* --- IP Box --- */
         .ip-box {
             background: rgba(0, 0, 0, 0.5);
-            padding: 20px;
+            padding: 15px 20px;
             border-radius: 10px;
-            margin: 30px 0;
+            margin: 20px 0;
             border: 2px solid #00d2ff;
-            display: inline-block;
+            display: inline-flex; /* Shrinks to fit content */
+            align-items: center;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            width: auto;
+            max-width: 100%;
         }
 
         .ip-text {
-            font-size: 24px;
+            font-size: clamp(16px, 4vw, 24px); /* Responsive font */
             font-weight: bold;
+            word-break: break-all;
         }
 
-        button {
+        .copy-btn {
             background: #00d2ff;
             border: none;
-            padding: 10px 20px;
+            padding: 8px 15px;
             border-radius: 5px;
             cursor: pointer;
             font-weight: bold;
-            margin-left: 10px;
+            font-size: 14px;
         }
 
-        button:hover {
+        .copy-btn:hover {
             background: #0099cc;
         }
 
+        /* --- Buttons --- */
         .buttons {
             margin-top: 30px;
+            display: flex;
+            flex-wrap: wrap; /* Allows buttons to wrap on small screens */
+            justify-content: center;
+            gap: 15px;
         }
 
         .btn {
-            display: inline-block;
-            padding: 15px 40px;
-            margin: 10px;
+            flex: 1 1 150px; /* Grows and shrinks, basis 150px */
+            max-width: 250px; /* Max width for desktop */
+            padding: 15px 20px;
             border-radius: 8px;
             text-decoration: none;
             font-weight: bold;
-            font-size: 18px;
+            font-size: clamp(14px, 2.5vw, 18px);
             transition: transform 0.2s;
             border: none;
             cursor: pointer;
+            text-align: center;
         }
 
         .btn:hover {
@@ -145,11 +125,13 @@
         .btn-tiktok { background: linear-gradient(45deg, #00f2ea, #ff0050); color: white; }
         .btn-vote { background: #2ecc71; color: white; border: 2px solid #27ae60; }
 
+        /* --- Status Section --- */
         .status {
             margin-top: 40px;
             padding: 20px;
             background: rgba(0, 0, 0, 0.3);
             border-radius: 10px;
+            width: 100%;
         }
 
         .online { color: #00ff00; }
@@ -172,7 +154,7 @@
             padding: 30px;
             border: 2px solid #00d2ff;
             border-radius: 15px;
-            width: 80%;
+            width: 90%;
             max-width: 500px;
             text-align: center;
             box-shadow: 0 0 20px #00d2ff;
@@ -196,7 +178,7 @@
             width: 100%;
             padding: 15px 0;
             margin: 15px 0;
-            font-size: 20px;
+            font-size: 18px;
             background: #2ecc71;
             color: white;
             text-decoration: none;
@@ -209,10 +191,17 @@
         
         .vote-option:last-child:hover { background: #3498db; }
 
+        /* --- Animations --- */
+        @keyframes logoPulse {
+            0% { transform: scale(1); box-shadow: 0 0 15px rgba(0, 210, 255, 0.6); }
+            50% { transform: scale(1.1); box-shadow: 0 0 30px rgba(0, 210, 255, 1), 0 0 10px white; }
+            100% { transform: scale(1); box-shadow: 0 0 15px rgba(0, 210, 255, 0.6); }
+        }
+
     </style>
 </head>
 <body>
-    <!-- Updated Logo with new image link -->
+    <!-- Logo -->
     <img src="https://cdn.discordapp.com/attachments/1219856167338115112/1474394597114253312/Screenshot_2026-02-20-18-47-33-34_40deb401b9ffe8e1df2f1cc5ba480b12.jpg?ex=6999b078&is=69985ef8&hm=9ed2436dff7a30633882ddceb9207a32c6e7b9042379dd1de9b58e5a70d817df" 
          alt="Water MC Logo" 
          class="corner-logo">
@@ -223,7 +212,7 @@
 
         <div class="ip-box">
             <span class="ip-text" id="server-ip">play.watermc.com</span>
-            <button onclick="copyIP()">Copy</button>
+            <button class="copy-btn" onclick="copyIP()">Copy</button>
         </div>
 
         <div class="buttons">
